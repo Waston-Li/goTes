@@ -21,13 +21,13 @@ func (e exampleType) World() string {
 // 注：同一个目录下面不能有个多main
 func main() {
 	flag.Parse()
-	var foo int = 123
+	var Foo int = 123
 	bar := 456 //两种声明语句等价 ;不带声明格式的只能在函数体中出现
-	var ptr *int = &foo
+	var ptr *int = &Foo
 
 	arr := []int{2, 3, 4} //切片
 	fmt.Println(printsum(arr))
-	fmt.Println(foo, bar, ptr)
+	fmt.Println(Foo, bar, ptr)
 	//接口
 	// s := new(pack.Simple)
 	// fmt.Println(pack.FI(s))
@@ -35,7 +35,7 @@ func main() {
 	//文件读入
 	//pack.FileInput()
 	//pack.FileInput()
-	//这是版本1
+	//这是版本1HHHHHHHHHH
 }
 
 func Setpcmd(c *pack.CMD) {
