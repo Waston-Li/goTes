@@ -35,7 +35,7 @@ func main() {
 	//文件读入
 	//pack.FileInput()
 	//pack.FileInput()
-
+	//这是版本1
 }
 
 func Setpcmd(c *pack.CMD) {
