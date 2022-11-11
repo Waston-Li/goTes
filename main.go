@@ -14,10 +14,6 @@ type exampleType struct {
 	Hello string
 }
 
-func (e exampleType) World() string {
-	return "world"
-}
-
 // 注：同一个目录下面不能有个多main
 func main() {
 	flag.Parse()
@@ -35,7 +31,29 @@ func main() {
 	//文件读入
 	//pack.FileInput()
 	//pack.FileInput()
-	//这是版本1HHHHHHHHHH
+
+	//协程与通道
+	//pack.PowByChannel(arr)
+	ch := make(chan int)
+	done := make(chan bool)
+
+	go func() {
+
+		for i := 0; i < 10; i++ {
+			ch <- i
+		}
+		done <- true
+
+	}()
+	go func() {
+
+		for {
+
+			fmt.Println(<-ch)
+		}
+	}()
+	<-done
+
 }
 
 func Setpcmd(c *pack.CMD) {
