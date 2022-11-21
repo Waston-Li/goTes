@@ -1,5 +1,6 @@
 package routineL
 
+// the way to go 14.2
 // Send the sequence 2, 3, 4, ... to channel 'ch'.
 func generate(ch chan int) {
 	for i := 2; ; i++ {
@@ -18,7 +19,10 @@ func filter(in, out chan int, prime int) {
 	}
 }
 
+//协程 filter拷贝整数到输出通道，丢弃掉可以被 `prime` 整除的数字。
+//然后每个 `prime` 又开启了一个新的协程，生成器和选择器并发请求。
 // The prime sieve: Daisy-chain filter processes together.
+
 // func main() {
 // 	ch := make(chan int) // Create a new channel.
 // 	go generate(ch)      // Start generate() as a goroutine.
