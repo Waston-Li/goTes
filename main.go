@@ -4,9 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"goTes/pack"
-	"io"
+	"goTes/src/webL"
 	"log"
-	"net"
 	"os"
 	"runtime"
 	"strings"
@@ -44,26 +43,13 @@ func main() {
 	//routineL.CSTest()
 
 	//网络、模板、与网页应用
-	var (
-		host          = "www.apache.org"
-		port          = "80"
-		remote        = host + ":" + port
-		msg    string = "GET / \n"
-		data          = make([]uint8, 4096)
-		read          = true
-		count         = 0
-	)
-	// 创建一个 socket
-	con, err := net.Dial("tcp", remote)
-	// 发送我们的消息，一个 http GET 请求
-	io.WriteString(con, msg)
-	// 读取服务器的响应
-	for read {
-		count, err = con.Read(data)
-		read = (err == nil)
-		fmt.Printf(string(data[0:count]))
-	}
-	con.Close()
+	//webL.ServerL()
+	//webL.ClentL()
+	// webL.WebserverL()  //  http://localhost: 来执行
+
+	//webL.HttpfetchL()
+	//webL.Simpleweb()
+	webL.WikiL()
 }
 
 func Setpcmd(c *pack.CMD) {
