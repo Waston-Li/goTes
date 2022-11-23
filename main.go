@@ -49,7 +49,8 @@ func main() {
 
 	//webL.HttpfetchL()
 	//webL.Simpleweb()
-	webL.WikiL()
+	//webL.WikiL()
+	webL.ElaboratedWebL()
 }
 
 func Setpcmd(c *pack.CMD) {
