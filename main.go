@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	designpattern "goTes/designPattern"
 	"goTes/pack"
-	"goTes/src/webL"
 	"log"
 	"os"
 	"runtime"
@@ -50,7 +50,10 @@ func main() {
 	//webL.HttpfetchL()
 	//webL.Simpleweb()
 	//webL.WikiL()
-	webL.ElaboratedWebL()
+	//webL.ElaboratedWebL()
+
+	//设计模式
+	designpattern.ChainOfResponsibility()
 }
 
 func Setpcmd(c *pack.CMD) {

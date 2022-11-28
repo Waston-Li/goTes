@@ -13,6 +13,7 @@ import (
 	"time"
 )
 
+// 15.8
 var helloRequests = expvar.NewInt("hello-requests") //`expvar` 可以创建（Int，Float 和 String 类型）变量，并将它们发布为公共变量;通常它被用于服务器操作计数。
 
 var webroot = flag.String("root", "D:\\", "web root directory")
@@ -39,6 +40,7 @@ func ElaboratedWebL() {
 	http.Handle("/args", http.HandlerFunc(ArgServer))
 
 	http.Handle("/chan", ChanCreate())
+	// http.Handle("/date", http.HandlerFunc(DateServer))
 
 	err := http.ListenAndServe(":12345", nil)
 	if err != nil {
@@ -115,9 +117,10 @@ func (ch Chan) ServeHTTP(w http.ResponseWriter, req *http.Request) { //每当有
 		for {
 			select {
 			case msg := <-ch:
-				io.WriteString(w, fmt.Sprintf("channel send #%d\n", msg))
+				io.WriteString(w, fmt.Sprintf("channel send #%d\n.\n.\n", msg))
 			case <-timeout:
-				io.WriteString(w, fmt.Sprint("End\n"))
+				fmt.Fprint(w, "End\n")
+				// io.WriteString(w, fmt.Sprint("End\n"))
 				return
 			}
 			time.Sleep(1e9)
@@ -125,4 +128,33 @@ func (ch Chan) ServeHTTP(w http.ResponseWriter, req *http.Request) { //每当有
 	}()
 	time.Sleep(8e9) //8秒后超时结束
 	timeout <- true
+}
+
+// Linux下运行，显示当前时间，调用 /bin/date
+func DateServer(rw http.ResponseWriter, req *http.Request) {
+	rw.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	r, w, err := os.Pipe() //返回一对相关联的 `File`，从 `r` 读取数据，返回已读取的字节数来自于 `w` 的写入
+	if err != nil {
+		fmt.Fprintf(rw, "pipe: %s\n", err)
+		return
+	}
+
+	p, err := os.StartProcess("/bin/date", []string{"date"}, &os.ProcAttr{Files: []*os.File{nil, w, w}})
+	defer r.Close()
+	w.Close()
+	if err != nil {
+		fmt.Fprintf(rw, "fork/exec: %s\n", err)
+		return
+	}
+	defer p.Release()
+	io.Copy(rw, r)
+	wait, err := p.Wait()
+	if err != nil {
+		fmt.Fprintf(rw, "wait: %s\n", err)
+		return
+	}
+	if !wait.Exited() {
+		fmt.Fprintf(rw, "date: %v\n", wait)
+		return
+	}
 }
