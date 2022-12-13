@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	designpattern "goTes/designPattern"
+	"goTes/designPattern"
 	"goTes/pack"
 	"log"
 	"os"
@@ -53,7 +53,9 @@ func main() {
 	//webL.ElaboratedWebL()
 
 	//设计模式
-	designpattern.ChainOfResponsibility()
+	//designpattern.ChainOfResponsibility()
+	designPattern.MediatorMode()
+
 }
 
 func Setpcmd(c *pack.CMD) {
